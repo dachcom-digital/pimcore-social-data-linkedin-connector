@@ -1,0 +1,11 @@
+social_data_connector_linkedin_connect:
+    path: /admin/social-data/connector/linkedin/connect
+    defaults: { _controller: SocialData\Connector\LinkedIn\Controller\Admin\LinkedInController::connectAction }
+
+social_data_connector_linkedin_connect_check:
+    path: /admin/social-data/connector/linkedin/check
+    defaults: { _controller: SocialData\Connector\LinkedIn\Controller\Admin\LinkedInController::checkAction }
+
+social_data_connector_linkedin_debug_token:
+    path: /admin/social-data/connector/linkedin/debug-token
+    defaults: { _controller: SocialData\Connector\LinkedIn\Controller\Admin\LinkedInController::debugTokenAction }

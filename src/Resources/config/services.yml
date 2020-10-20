@@ -1,0 +1,40 @@
+services:
+
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    ## Definition
+
+    SocialData\Connector\LinkedIn\Definition\ConnectorDefinition:
+        tags:
+            - {
+                name: social_data.connector_definition,
+                identifier: linkedIn,
+                socialPostBuilder: SocialData\Connector\LinkedIn\Builder\SocialPostBuilder
+            }
+
+    ## Social Post Builder
+
+    SocialData\Connector\LinkedIn\Builder\SocialPostBuilder: ~
+
+    ## API
+
+    SocialData\Connector\LinkedIn\Client\LinkedInClient: ~
+
+    ## Form
+
+    SocialData\Connector\LinkedIn\Form\Admin\Type\LinkedInEngineType:
+        tags:
+            - { name: form.type }
+
+    SocialData\Connector\LinkedIn\Form\Admin\Type\LinkedInFeedType:
+        tags:
+            - { name: form.type }
+
+    ## Controller
+
+    SocialData\Connector\LinkedIn\Controller\Admin\LinkedInController:
+        calls:
+            - [setContainer, ['@service_container']]

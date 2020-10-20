@@ -1,0 +1,5 @@
+social_data.connector.linkedin.connect: 'Verbinden'
+social_data.connector.linkedin.connect_service: 'LinkedIn Connect Service'
+social_data.connector.linkedin.connect_service_note: 'Sie müssen eine Verbindung zu dieser Anwendung herstellen. Klicken Sie auf "Verbinden" um den Authentifizierungsprozess zu starten.'
+social_data.wall.feed.linkedin.page_id: 'Page ID'
+social_data.wall.feed.linkedin.limit: 'Limit'

@@ -1,0 +1,35 @@
+{
+    "name": "dachcom-digital/social-data-linkedin-connector",
+    "type": "pimcore-social-data-connector-bundle",
+    "license": "GPL-3.0-or-later",
+    "description": "Pimcore Social Data LinkedIn Connector",
+    "keywords": [
+        "pimcore",
+        "social",
+        "feed",
+        "social wall",
+        "linkedin"
+    ],
+    "homepage": "https://github.com/dachcom-digital/pimcore-social-data-linkedin-connectorm",
+    "authors": [
+        {
+            "name": "DACHCOM.DIGITAL Stefan Hagspiel",
+            "email": "shagspiel@dachcom.ch",
+            "homepage": "http://www.dachcom.com/",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SocialData\\Connector\\LinkedIn\\": "src"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    },
+    "require": {
+        "dachcom-digital/social-data": "^1.0"
+    }
+}
