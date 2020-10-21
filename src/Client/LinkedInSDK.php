@@ -18,6 +18,7 @@ class LinkedInSDK
     const R_ADS_REPORTING = 'r_ads_reporting';                      // Retrieve reporting for your advertising accounts
     const R_EMAILADDRESS = 'r_emailaddress';                        // Use the primary email address associated with your LinkedIn account
     const R_LITEPROFILE = 'r_liteprofile';                          // Use your name, headline, and photo
+    const R_BASICPROFILE = 'r_basicprofile';                        // Required to retrieve name, photo, headline, and vanity name for the authenticated user. Please review Basic Profile Fields. Note that the v2 r_basicprofile permission grants only a subset of fields provided in v1.
     const R_MEMBER_SOCIAL = 'r_member_social';                      // Retrieve your posts, comments, likes, and other engagement data
     const R_ORGANIZATION_SOCIAL = 'r_organization_social';          // Retrieve your organizations' posts, including any comments, likes and other engagement data
     const RW_AD_CAMPAIGNS = 'rw_ad_campaigns';                      // Manage your advertising campaigns
@@ -272,6 +273,7 @@ class LinkedInSDK
     {
         $endpoint = self::API_BASE . '/' . trim($endpoint, '/\\') . '?oauth2_access_token=' . $this->getAccessToken();
         $headers[] = 'x-li-format: json';
+        $headers[] = 'x-restli-protocol-version: 2.0.0';
 
         return $this->_makeRequest($endpoint, $payload, $method, $headers, $curlOptions);
     }

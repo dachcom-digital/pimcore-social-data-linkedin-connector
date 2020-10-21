@@ -1,5 +1,5 @@
 social_data.connector.linkedin.connect: 'Connect'
 social_data.connector.linkedin.connect_service: 'LinkedIn Connect Service'
 social_data.connector.linkedin.connect_service_note: 'You need to connect your application. Click "Connect" to start the authentication process.'
-social_data.wall.feed.linkedin.page_id: 'Page ID'
+social_data.wall.feed.linkedin.company_id: 'Company ID'
 social_data.wall.feed.linkedin.limit: 'Limit'

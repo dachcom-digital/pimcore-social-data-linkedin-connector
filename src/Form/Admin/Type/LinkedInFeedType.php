@@ -16,7 +16,7 @@ class LinkedInFeedType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('pageId', TextType::class);
+        $builder->add('companyId', TextType::class);
         $builder->add('limit', IntegerType::class);
     }
 

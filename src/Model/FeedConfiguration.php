@@ -10,7 +10,7 @@ class FeedConfiguration implements ConnectorFeedConfigurationInterface
     /**
      * @var string|null
      */
-    protected $pageId;
+    protected $companyId;
 
     /**
      * @var int
@@ -26,19 +26,19 @@ class FeedConfiguration implements ConnectorFeedConfigurationInterface
     }
 
     /**
-     * @param string|null $pageId
+     * @param string|null $companyId
      */
-    public function setPageId(?string $pageId)
+    public function setCompanyId(?string $companyId)
     {
-        $this->pageId = $pageId;
+        $this->companyId = $companyId;
     }
 
     /**
      * @return string|null
      */
-    public function getPageId()
+    public function getCompanyId()
     {
-        return $this->pageId;
+        return $this->companyId;
     }
 
     /**
