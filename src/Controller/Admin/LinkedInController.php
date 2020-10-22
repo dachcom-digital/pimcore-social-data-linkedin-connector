@@ -141,8 +141,8 @@ class LinkedInController extends AdminController
             return $this->adminJson(['error' => true, 'message' => $e->getMessage()]);
         }
 
-        if ($accessTokenMetadata instanceof \stdClass) {
-            $accessTokenMetadata = get_object_vars($accessTokenMetadata);
+        if (!is_array($accessTokenMetadata)) {
+            return $this->adminJson(['error' => true, 'message' => 'invalid token data']);
         }
 
         if (isset($accessTokenMetadata['authorized_at'])) {

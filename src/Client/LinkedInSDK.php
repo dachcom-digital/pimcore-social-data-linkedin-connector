@@ -149,8 +149,8 @@ class LinkedInSDK
             throw new \RuntimeException('Access Token Request Error: ' . $data->error . ' -- ' . $data->error_description);
         }
 
-        $this->accessToken = $data->access_token;
-        $this->accessTokenExpires = $data->expires_in;
+        $this->accessToken = $data['access_token'];
+        $this->accessTokenExpires = $data['expires_in'];
 
         return $this->accessToken;
     }
@@ -158,7 +158,7 @@ class LinkedInSDK
     /**
      * This timestamp is "expires in". In other words, the token will expire in now() + expires_in
      *
-     * @return int access token expiration time -
+     * @return int
      */
     public function getAccessTokenExpiration()
     {
@@ -216,21 +216,6 @@ class LinkedInSDK
     }
 
     /**
-     * POST to an authenciated API endpoint w/ payload
-     *
-     * @param string $endpoint
-     * @param array  $payload
-     * @param array  $headers
-     * @param array  $curlOptions
-     *
-     * @return array
-     */
-    public function post($endpoint, $payload = [], $headers = [], $curlOptions = [])
-    {
-        return $this->fetch($endpoint, $payload, self::HTTP_METHOD_POST, $headers, $curlOptions);
-    }
-
-    /**
      * GET an authenticated API endpoind w/ payload
      *
      * @param string $endpoint
@@ -246,7 +231,39 @@ class LinkedInSDK
     }
 
     /**
-     * PUT to an authenciated API endpoint w/ payload
+     * GET an authenticated API endpoind w/ payload
+     *
+     * @param string $endpoint
+     * @param array  $payload
+     * @param array  $headers
+     * @param array  $curlOptions
+     *
+     * @return array
+     */
+    public function getEncoded($endpoint, $payload = [], $headers = [], $curlOptions = [])
+    {
+        return $this->fetch($endpoint, $payload, self::HTTP_METHOD_GET, $headers, $curlOptions, true);
+    }
+
+    /**
+     * POST to an authenticated API endpoint w/ payload
+     *
+     * @param string $endpoint
+     * @param array  $payload
+     * @param array  $headers
+     * @param array  $curlOptions
+     *
+     * @return array
+     */
+    public function post($endpoint, $payload = [], $headers = [], $curlOptions = [])
+    {
+        $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+
+        return $this->fetch($endpoint, $payload, self::HTTP_METHOD_POST, $headers, $curlOptions);
+    }
+
+    /**
+     * PUT to an authenticated API endpoint w/ payload
      *
      * @param string $endpoint
      * @param array  $payload
@@ -257,6 +274,8 @@ class LinkedInSDK
      */
     public function put($endpoint, $payload = [], $headers = [], $curlOptions = [])
     {
+        $headers[] = 'Content-Type: application/x-www-form-urlencoded';
+
         return $this->fetch($endpoint, $payload, self::HTTP_METHOD_PUT, $headers, $curlOptions);
     }
 
@@ -266,16 +285,18 @@ class LinkedInSDK
      * @param string $method
      * @param array  $headers
      * @param array  $curlOptions
+     * @param bool   $encodeQuery
      *
      * @return array
      */
-    public function fetch($endpoint, $payload = [], $method = 'GET', array $headers = [], array $curlOptions = [])
+    public function fetch($endpoint, $payload = [], $method = 'GET', array $headers = [], array $curlOptions = [], bool $encodeQuery = false)
     {
         $endpoint = self::API_BASE . '/' . trim($endpoint, '/\\') . '?oauth2_access_token=' . $this->getAccessToken();
-        $headers[] = 'x-li-format: json';
-        $headers[] = 'x-restli-protocol-version: 2.0.0';
 
-        return $this->_makeRequest($endpoint, $payload, $method, $headers, $curlOptions);
+        $headers[] = 'Content-Type: application/json';
+        $headers[] = 'X-Restli-Protocol-Version: 2.0.0';
+
+        return $this->_makeRequest($endpoint, $payload, $method, $headers, $curlOptions, $encodeQuery);
     }
 
     /**
@@ -312,11 +333,11 @@ class LinkedInSDK
      * @param string $method
      * @param array  $headers
      * @param array  $curlOptions
+     * @param bool   $useEncodedQuery
      *
      * @return array
-     * @throws \RuntimeException
      */
-    protected function _makeRequest($url, $payload = [], $method = 'GET', array $headers = [], array $curlOptions = [])
+    protected function _makeRequest($url, $payload = [], $method = 'GET', array $headers = [], array $curlOptions = [], bool $useEncodedQuery = false)
     {
         $ch = $this->_getCurlHandle();
 
@@ -330,14 +351,16 @@ class LinkedInSDK
         ];
 
         if (!empty($payload)) {
-            if ($options[CURLOPT_CUSTOMREQUEST] == self::HTTP_METHOD_POST || $options[CURLOPT_CUSTOMREQUEST] == self::HTTP_METHOD_PUT) {
+            if (in_array($options[CURLOPT_CUSTOMREQUEST], [self::HTTP_METHOD_POST, self::HTTP_METHOD_PUT])) {
+
+                $headers[] = 'Content-Length: ' . strlen($options[CURLOPT_POSTFIELDS]);
+
                 $options[CURLOPT_POST] = true;
                 $options[CURLOPT_POSTFIELDS] = is_array($payload) ? http_build_query($payload) : $payload;
-                $headers[] = 'Content-Length: ' . strlen($options[CURLOPT_POSTFIELDS]);
-                $headers[] = 'Content-Type: application/x-www-form-urlencoded';
                 $options[CURLOPT_HTTPHEADER] = $headers;
             } else {
-                $options[CURLOPT_URL] .= '&' . http_build_query($payload, '&');
+                $query = http_build_query($payload);
+                $options[CURLOPT_URL] = sprintf('%s&%s', $options[CURLOPT_URL], ($useEncodedQuery ? urldecode($query) : $query));
             }
         }
 
@@ -353,7 +376,7 @@ class LinkedInSDK
             throw new \RuntimeException('Request Error: ' . curl_error($ch));
         }
 
-        $response = json_decode($response); //CHANGED to object
+        $response = json_decode($response, true);
 
         if (isset($response->status) && is_numeric($response->status) && ($response->status < 200 || $response->status > 300)) {
             throw new \RuntimeException(json_encode($response));

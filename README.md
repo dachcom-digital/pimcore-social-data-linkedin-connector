@@ -3,6 +3,8 @@
 This Connector allows you to fetch social posts from LinkedIn. 
 Before you start be sure you've checked out the [Setup Instructions](../00_Setup.md).
 
+![image](https://user-images.githubusercontent.com/700119/96862352-a3f61d00-1465-11eb-9ea0-1c0d676bda01.png)
+
 #### Requirements
 * [Pimcore Social Data Bundle](https://github.com/dachcom-digital/pimcore-social-data)
 
@@ -46,7 +48,7 @@ social_data:
 ```
 
 ## Connector Configuration
-![image]
+![image](https://user-images.githubusercontent.com/700119/96862232-7c9f5000-1465-11eb-9f54-aa5eecde76ed.png)
 
 Now head back to the backend (`System` => `Social Data` => `Connector Configuration`) and checkout the linkedIn tab.
 - Click on `Install`
@@ -55,7 +57,7 @@ Now head back to the backend (`System` => `Social Data` => `Connector Configurat
 - Click `Connect`
   
 ## Connection
-![image]
+![image](https://user-images.githubusercontent.com/700119/96862278-8d4fc600-1465-11eb-8950-e8b32890f60d.png)
 
 This will guide you through the linkedIn token generation. 
 After hitting the "Connect" button, a popup will open to guide you through linkedIn authentication process. 
@@ -66,7 +68,8 @@ Otherwise, you'll receive an error message. You may then need to repeat the conn
 
 | Name | Description
 |------|----------------------|
-| `Limit` | Define a limit to restrict the amount of social posts to import (Default: 50) |
+| `Company ID` | Set company id to fetch posts from |
+| `Limit` | Define a limit to restrict the amount of social posts to import (Default: 20) |
 
 ## Extended Connector Configuration
 Normally you don't need to modify connector (`connector_config`) configuration, so most of the time you can skip this step.
@@ -78,7 +81,7 @@ social_data:
     available_connectors:
         -   connector_name: linkedIn
             connector_config:
-                api_connect_permission: ['r_liteprofile', 'r_emailaddress'] # default value
+                api_connect_permission: ['r_liteprofile', 'r_emailaddress', 'r_organization_social'] # default value
 ```
 
 ***

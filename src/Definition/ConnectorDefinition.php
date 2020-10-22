@@ -70,7 +70,7 @@ class ConnectorDefinition implements ConnectorDefinitionInterface
             'api_connect_permission' => [
                 LinkedInSDK::R_LITEPROFILE,
                 LinkedInSDK::R_EMAILADDRESS,
-                //LinkedInSDK::R_ORGANIZATION_SOCIAL,
+                LinkedInSDK::R_ORGANIZATION_SOCIAL,
             ]
         ]);
 
