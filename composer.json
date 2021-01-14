@@ -24,12 +24,26 @@
             "SocialData\\Connector\\LinkedIn\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "": "src/"
+        },
+        "classmap": [
+            "app/TestKernel.php"
+        ]
+    },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "2.0-dev"
         }
     },
     "require": {
         "dachcom-digital/social-data": "^1.0"
+    },
+    "require-dev": {
+        "codeception/codeception": "~2.4.0",
+        "phpstan/phpstan": "^0.12",
+        "phpstan/phpstan-symfony": "^0.12",
+        "symplify/easy-coding-standard": "^8.0"
     }
 }
