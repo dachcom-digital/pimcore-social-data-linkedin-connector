@@ -68,6 +68,12 @@ framework:
         cookie_samesite: 'lax'
 ```
 
+## LinkedIn Backoffice
+Some hints to set up your LinkedIn app:
+- Create App via https://www.linkedin.com/developers/apps
+- Add `https://YOURDOMAIN/admin/social-data/connector/linkedin/check` in `Authorized redirect URLs for your app`
+- Apply for verification (We wish you the best of luck!)
+
 ## Connector Configuration
 ![image](https://user-images.githubusercontent.com/700119/96862232-7c9f5000-1465-11eb-9f54-aa5eecde76ed.png)
 

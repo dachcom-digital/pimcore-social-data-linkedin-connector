@@ -10,22 +10,22 @@ class LinkedInSDK
     protected const API_BASE = 'https://api.linkedin.com/v2';
     protected const OAUTH_BASE = 'https://www.linkedin.com/oauth/v2';
 
-    protected const R_AD_CAMPAIGNS = 'r_ad_campaigns';                        // View advertising campaigns you manage
-    protected const R_ADS = 'r_ads';                                          // Retrieve your advertising accounts
-    protected const R_ADS_LEADGEN_AUTOMATION = 'r_ads_leadgen_automation';    // Access your Lead Gen Forms and retrieve leads
-    protected const R_ADS_REPORTING = 'r_ads_reporting';                      // Retrieve reporting for your advertising accounts
-    protected const R_EMAILADDRESS = 'r_emailaddress';                        // Use the primary email address associated with your LinkedIn account
-    protected const R_LITEPROFILE = 'r_liteprofile';                          // Use your name, headline, and photo
-    protected const R_BASICPROFILE = 'r_basicprofile';                        // Required to retrieve name, photo, headline, and vanity name for the authenticated user. Please review Basic Profile Fields. Note that the v2 r_basicprofile permission grants only a subset of fields provided in v1.
-    protected const R_MEMBER_SOCIAL = 'r_member_social';                      // Retrieve your posts, comments, likes, and other engagement data
-    protected const R_ORGANIZATION_SOCIAL = 'r_organization_social';          // Retrieve your organizations' posts, including any comments, likes and other engagement data
-    protected const RW_AD_CAMPAIGNS = 'rw_ad_campaigns';                      // Manage your advertising campaigns
-    protected const RW_ADS = 'rw_ads';                                        // Manage your advertising accounts
-    protected const RW_DMP_SEGMENTS = 'rw_dmp_segments';                      // Create and manage your matched audiences
-    protected const RW_ORGANIZATION_ADMIN = 'rw_organization_admin';          // Manage your organizations' pages and retrieve reporting data
-    protected const RW_ORGANIZATION = 'rw_organization';                      // Manage your organization's page and post updates
-    protected const W_MEMBER_SOCIAL = 'w_member_social';                      // Post, comment and like posts on your behalf
-    protected const W_ORGANIZATION_SOCIAL = 'w_organization_social';          // Post, comment and like posts on your organization's behalf
+    public const R_AD_CAMPAIGNS = 'r_ad_campaigns';                        // View advertising campaigns you manage
+    public const R_ADS = 'r_ads';                                          // Retrieve your advertising accounts
+    public const R_ADS_LEADGEN_AUTOMATION = 'r_ads_leadgen_automation';    // Access your Lead Gen Forms and retrieve leads
+    public const R_ADS_REPORTING = 'r_ads_reporting';                      // Retrieve reporting for your advertising accounts
+    public const R_EMAILADDRESS = 'r_emailaddress';                        // Use the primary email address associated with your LinkedIn account
+    public const R_LITEPROFILE = 'r_liteprofile';                          // Use your name, headline, and photo
+    public const R_BASICPROFILE = 'r_basicprofile';                        // Required to retrieve name, photo, headline, and vanity name for the authenticated user. Please review Basic Profile Fields. Note that the v2 r_basicprofile permission grants only a subset of fields provided in v1.
+    public const R_MEMBER_SOCIAL = 'r_member_social';                      // Retrieve your posts, comments, likes, and other engagement data
+    public const R_ORGANIZATION_SOCIAL = 'r_organization_social';          // Retrieve your organizations' posts, including any comments, likes and other engagement data
+    public const RW_AD_CAMPAIGNS = 'rw_ad_campaigns';                      // Manage your advertising campaigns
+    public const RW_ADS = 'rw_ads';                                        // Manage your advertising accounts
+    public const RW_DMP_SEGMENTS = 'rw_dmp_segments';                      // Create and manage your matched audiences
+    public const RW_ORGANIZATION_ADMIN = 'rw_organization_admin';          // Manage your organizations' pages and retrieve reporting data
+    public const RW_ORGANIZATION = 'rw_organization';                      // Manage your organization's page and post updates
+    public const W_MEMBER_SOCIAL = 'w_member_social';                      // Post, comment and like posts on your behalf
+    public const W_ORGANIZATION_SOCIAL = 'w_organization_social';          // Post, comment and like posts on your organization's behalf
 
     protected const HTTP_METHOD_GET = 'GET';
     protected const HTTP_METHOD_POST = 'POST';
@@ -74,8 +74,9 @@ class LinkedInSDK
      */
     public function getLoginUrl(array $scope = [], ?string $state = null): string
     {
+        $safeScope = '';
         if (!empty($scope)) {
-            $scope = implode('%20', $scope);
+            $safeScope = implode('%20', $scope);
         }
 
         if (empty($state)) {
@@ -84,7 +85,7 @@ class LinkedInSDK
 
         $this->setState($state);
 
-        return self::OAUTH_BASE . "/authorization?response_type=code&client_id={$this->config['api_key']}&scope={$scope}&state={$state}&redirect_uri=" . urlencode($this->config['callback_url']);
+        return self::OAUTH_BASE . "/authorization?response_type=code&client_id={$this->config['api_key']}&scope={$safeScope}&state={$state}&redirect_uri=" . urlencode($this->config['callback_url']);
     }
 
     /**
@@ -264,11 +265,13 @@ class LinkedInSDK
         if (!empty($payload)) {
             if (in_array($options[CURLOPT_CUSTOMREQUEST], [self::HTTP_METHOD_POST, self::HTTP_METHOD_PUT], true)) {
 
-                $headers[] = 'Content-Length: ' . strlen($options[CURLOPT_POSTFIELDS]);
-
                 $options[CURLOPT_POST] = true;
                 $options[CURLOPT_POSTFIELDS] = is_array($payload) ? http_build_query($payload) : $payload;
+
+                $headers[] = 'Content-Length: ' . strlen($options[CURLOPT_POSTFIELDS]);
+
                 $options[CURLOPT_HTTPHEADER] = $headers;
+
             } else {
                 $query = http_build_query($payload);
                 $options[CURLOPT_URL] = sprintf('%s&%s', $options[CURLOPT_URL], ($useEncodedQuery ? urldecode($query) : $query));
