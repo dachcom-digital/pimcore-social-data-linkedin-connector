@@ -8,44 +8,26 @@ use SocialData\Connector\LinkedIn\Form\Admin\Type\LinkedInEngineType;
 class EngineConfiguration implements ConnectorEngineConfigurationInterface
 {
     /**
-     * @var string
-     *
      * @internal
      */
-    protected $accessToken;
+    protected ?string $accessToken = null;
 
     /**
-     * @var null|\DateTime
-     *
      * @internal
      */
-    protected $accessTokenExpiresAt;
+    protected ?\DateTime $accessTokenExpiresAt = null;
 
-    /**
-     * @var string
-     */
-    protected $clientId;
+    protected ?string $clientId;
+    protected ?string $clientSecret;
 
-    /**
-     * @var string
-     */
-    protected $clientSecret;
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getFormClass()
+    public static function getFormClass(): string
     {
         return LinkedInEngineType::class;
     }
 
-    /**
-     * @param string $token
-     * @param bool   $forceUpdate
-     */
-    public function setAccessToken($token, $forceUpdate = false)
+    public function setAccessToken(?string $token, bool $forceUpdate = false): void
     {
-        // symfony: if there are any fields on the form that aren’t included in the submitted data,
+        // symfony: if there are any fields on the form that are not included in the submitted data,
         // those fields will be explicitly set to null.
         if ($token === null && $forceUpdate === false) {
             return;
@@ -54,21 +36,14 @@ class EngineConfiguration implements ConnectorEngineConfigurationInterface
         $this->accessToken = $token;
     }
 
-    /**
-     * @return string
-     */
-    public function getAccessToken()
+    public function getAccessToken(): ?string
     {
         return $this->accessToken;
     }
 
-    /**
-     * @param null|\DateTime $expiresAt
-     * @param bool           $forceUpdate
-     */
-    public function setAccessTokenExpiresAt($expiresAt, $forceUpdate = false)
+    public function setAccessTokenExpiresAt(?\DateTime $expiresAt, bool $forceUpdate = false): void
     {
-        // symfony: if there are any fields on the form that aren’t included in the submitted data,
+        // symfony: if there are any fields on the form that are not included in the submitted data,
         // those fields will be explicitly set to null.
         if ($expiresAt === null && $forceUpdate === false) {
             return;
@@ -77,42 +52,27 @@ class EngineConfiguration implements ConnectorEngineConfigurationInterface
         $this->accessTokenExpiresAt = $expiresAt;
     }
 
-    /**
-     * @return null|\DateTime
-     */
-    public function getAccessTokenExpiresAt()
+    public function getAccessTokenExpiresAt(): ?\DateTime
     {
         return $this->accessTokenExpiresAt;
     }
 
-    /**
-     * @param string $clientId
-     */
-    public function setClientId($clientId)
+    public function setClientId(string $clientId): void
     {
         $this->clientId = $clientId;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientId()
+    public function getClientId(): ?string
     {
         return $this->clientId;
     }
 
-    /**
-     * @param string $clientSecret
-     */
-    public function setClientSecret($clientSecret)
+    public function setClientSecret(string $clientSecret): void
     {
         $this->clientSecret = $clientSecret;
     }
 
-    /**
-     * @return string
-     */
-    public function getClientSecret()
+    public function getClientSecret(): ?string
     {
         return $this->clientSecret;
     }

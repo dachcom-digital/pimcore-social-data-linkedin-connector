@@ -38,7 +38,7 @@
         }
     },
     "require": {
-        "dachcom-digital/social-data": "^1.0"
+        "dachcom-digital/social-data": "^2.0"
     },
     "require-dev": {
         "codeception/codeception": "~2.4.0",

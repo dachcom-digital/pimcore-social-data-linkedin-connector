@@ -16,22 +16,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SocialPostBuilder implements SocialPostBuilderInterface
 {
-    /**
-     * @var LinkedInClient
-     */
-    protected $linkedInClient;
+    protected LinkedInClient $linkedInClient;
 
-    /**
-     * @param LinkedInClient $linkedInClient
-     */
     public function __construct(LinkedInClient $linkedInClient)
     {
         $this->linkedInClient = $linkedInClient;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureFetch(BuildConfig $buildConfig, OptionsResolver $resolver): void
     {
         $engineConfiguration = $buildConfig->getEngineConfiguration();
@@ -78,9 +69,6 @@ class SocialPostBuilder implements SocialPostBuilderInterface
         $resolver->addAllowedTypes('queryPayLoad', ['array']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function fetch(FetchData $data): void
     {
         $options = $data->getOptions();
@@ -125,17 +113,11 @@ class SocialPostBuilder implements SocialPostBuilderInterface
         $data->setFetchedEntities($elements);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureFilter(BuildConfig $buildConfig, OptionsResolver $resolver): void
     {
         // nothing to configure so far.
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function filter(FilterData $data): void
     {
         $element = $data->getTransferredData();
@@ -155,7 +137,7 @@ class SocialPostBuilder implements SocialPostBuilderInterface
             return;
         }
 
-        if (is_array($visibility) && !in_array('PUBLIC', array_values($visibility))) {
+        if (is_array($visibility) && !in_array('PUBLIC', array_values($visibility), true)) {
             return;
         }
 
@@ -163,17 +145,11 @@ class SocialPostBuilder implements SocialPostBuilderInterface
         $data->setFilteredId($element['id']);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function configureTransform(BuildConfig $buildConfig, OptionsResolver $resolver): void
     {
         // nothing to configure so far.
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function transform(TransformData $data): void
     {
         $element = $data->getTransferredData();
@@ -214,12 +190,7 @@ class SocialPostBuilder implements SocialPostBuilderInterface
         $data->setTransformedElement($socialPost);
     }
 
-    /**
-     * @param mixed|array $media
-     *
-     * @return string|null
-     */
-    protected function findThumbnail($media)
+    protected function findThumbnail(mixed $media): ?string
     {
         if (!is_array($media)) {
             return null;
@@ -244,7 +215,7 @@ class SocialPostBuilder implements SocialPostBuilderInterface
             $widthColumns = array_column($validThumbs, 'width');
             $index = array_keys($widthColumns, max($widthColumns));
 
-            if (isset($index[0]) && isset($validThumbs[$index[0]]) && isset($validThumbs[$index[0]]['url'])) {
+            if (isset($index[0], $validThumbs[$index[0]]['url'])) {
                 $thumbnail = $validThumbs[$index[0]]['url'];
                 break;
             }
