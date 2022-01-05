@@ -266,7 +266,7 @@ class LinkedInSDK
             if (in_array($options[CURLOPT_CUSTOMREQUEST], [self::HTTP_METHOD_POST, self::HTTP_METHOD_PUT], true)) {
 
                 $options[CURLOPT_POST] = true;
-                $options[CURLOPT_POSTFIELDS] = is_array($payload) ? http_build_query($payload) : $payload;
+                $options[CURLOPT_POSTFIELDS] = http_build_query($payload);
 
                 $headers[] = 'Content-Length: ' . strlen($options[CURLOPT_POSTFIELDS]);
 
