@@ -6,15 +6,14 @@
 [![PhpStan](https://img.shields.io/github/workflow/status/dachcom-digital/pimcore-social-data-linkedin-connector/PHP%20Stan/master?style=flat-square&logo=github&label=phpstan%20level%204)](https://github.com/dachcom-digital/pimcore-social-data-linkedin-connector/actions?query=workflow%3A"PHP+Stan"+branch%3Amaster)
 
 This Connector allows you to fetch social posts from LinkedIn. 
-Before you start be sure you've checked out the [Setup Instructions](../00_Setup.md).
 
 ![image](https://user-images.githubusercontent.com/700119/96862352-a3f61d00-1465-11eb-9ea0-1c0d676bda01.png)
 
 ### Release Plan
 | Release | Supported Pimcore Versions        | Supported Symfony Versions | Release Date | Maintained     | Branch     |
 |---------|-----------------------------------|----------------------------|--------------|----------------|------------|
-| **2.x** | `10.1` - `10.2`                   | `5.4`                      | --           | Feature Branch | master     |
-| **1.x** | `6.0` - `6.9`                     | `3.4`, `^4.4`              | 22.10.2020   | Unsupported    | 1.x        |
+| **2.x** | `10.1` - `10.2`                   | `5.4`                      | 05.01.2022   | Feature Branch | master     |
+| **1.x** | `6.0` - `6.9`                     | `3.4`, `^4.4`              | 22.10.2020   | Unsupported    | [1.x](https://github.com/dachcom-digital/pimcore-social-data-linkedin-connector/tree/1.x) |
 
 ## Installation
 
