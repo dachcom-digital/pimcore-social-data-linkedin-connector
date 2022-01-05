@@ -7,20 +7,14 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class LinkedInClient
 {
-    /**
-     * @var UrlGeneratorInterface
-     */
-    private $urlGenerator;
+    private UrlGeneratorInterface $urlGenerator;
 
-    /**
-     * @param UrlGeneratorInterface $urlGenerator
-     */
     public function __construct(UrlGeneratorInterface $urlGenerator)
     {
         $this->urlGenerator = $urlGenerator;
     }
 
-    public function getClient(EngineConfiguration $configuration)
+    public function getClient(EngineConfiguration $configuration): LinkedInSDK
     {
         return new LinkedInSDK([
             'api_key'      => $configuration->getClientId(),
@@ -29,10 +23,7 @@ class LinkedInClient
         ]);
     }
 
-    /**
-     * @return string
-     */
-    protected function generateConnectUri()
+    protected function generateConnectUri(): string
     {
         return $this->urlGenerator->generate('social_data_connector_linkedin_connect_check', [], UrlGeneratorInterface::ABSOLUTE_URL);
     }

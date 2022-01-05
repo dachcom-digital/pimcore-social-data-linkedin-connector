@@ -11,7 +11,6 @@ use SocialDataBundle\Controller\Admin\Traits\ConnectResponseTrait;
 use SocialDataBundle\Service\ConnectorServiceInterface;
 use SocialDataBundle\Service\EnvironmentServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -20,26 +19,10 @@ class LinkedInController extends AdminController
 {
     use ConnectResponseTrait;
 
-    /**
-     * @var LinkedInClient
-     */
-    protected $linkedInClient;
+    protected LinkedInClient $linkedInClient;
+    protected EnvironmentServiceInterface $environmentService;
+    protected ConnectorServiceInterface $connectorService;
 
-    /**
-     * @var EnvironmentServiceInterface
-     */
-    protected $environmentService;
-
-    /**
-     * @var ConnectorServiceInterface
-     */
-    protected $connectorService;
-
-    /**
-     * @param LinkedInClient              $linkedInClient
-     * @param EnvironmentServiceInterface $environmentService
-     * @param ConnectorServiceInterface   $connectorService
-     */
     public function __construct(
         LinkedInClient $linkedInClient,
         EnvironmentServiceInterface $environmentService,
@@ -50,12 +33,7 @@ class LinkedInController extends AdminController
         $this->connectorService = $connectorService;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RedirectResponse|Response
-     */
-    public function connectAction(Request $request)
+    public function connectAction(Request $request): Response
     {
         try {
             $connectorDefinition = $this->getConnectorDefinition();
@@ -73,13 +51,9 @@ class LinkedInController extends AdminController
     }
 
     /**
-     * @param Request $request
-     *
-     * @return Response
-     *
      * @throws \Exception
      */
-    public function checkAction(Request $request)
+    public function checkAction(Request $request): Response
     {
         try {
             $connectorEngineConfig = $this->getConnectorEngineConfig($this->getConnectorDefinition());
@@ -115,7 +89,7 @@ class LinkedInController extends AdminController
      *
      * @return JsonResponse
      */
-    public function debugTokenAction(Request $request)
+    public function debugTokenAction(Request $request): JsonResponse
     {
         try {
             $connectorEngineConfig = $this->getConnectorEngineConfig($this->getConnectorDefinition());
@@ -163,10 +137,7 @@ class LinkedInController extends AdminController
         ]);
     }
 
-    /**
-     * @return ConnectorDefinitionInterface
-     */
-    protected function getConnectorDefinition()
+    protected function getConnectorDefinition(): ConnectorDefinitionInterface
     {
         $connectorDefinition = $this->connectorService->getConnectorDefinition('linkedIn', true);
 
@@ -177,12 +148,7 @@ class LinkedInController extends AdminController
         return $connectorDefinition;
     }
 
-    /**
-     * @param ConnectorDefinitionInterface $connectorDefinition
-     *
-     * @return EngineConfiguration
-     */
-    protected function getConnectorEngineConfig(ConnectorDefinitionInterface $connectorDefinition)
+    protected function getConnectorEngineConfig(ConnectorDefinitionInterface $connectorDefinition): EngineConfiguration
     {
         $connectorEngineConfig = $connectorDefinition->getEngineConfiguration();
         if (!$connectorEngineConfig instanceof EngineConfiguration) {

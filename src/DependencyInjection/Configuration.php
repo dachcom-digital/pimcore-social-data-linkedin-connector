@@ -7,13 +7,10 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    /**
-     * @return TreeBuilder
-     */
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('social_data_linkedin_connector');
+        $treeBuilder = new TreeBuilder('social_data_linkedin_connector');
+        $rootNode = $treeBuilder->getRootNode();
 
         return $treeBuilder;
     }

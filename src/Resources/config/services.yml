@@ -36,5 +36,4 @@ services:
     ## Controller
 
     SocialData\Connector\LinkedIn\Controller\Admin\LinkedInController:
-        calls:
-            - [setContainer, ['@service_container']]
+        tags: [ 'controller.service_arguments' ]

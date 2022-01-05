@@ -7,52 +7,30 @@ use SocialData\Connector\LinkedIn\Form\Admin\Type\LinkedInFeedType;
 
 class FeedConfiguration implements ConnectorFeedConfigurationInterface
 {
-    /**
-     * @var string|null
-     */
-    protected $companyId;
+    protected ?string $companyId = null;
+    protected ?int $limit = null;
 
-    /**
-     * @var int
-     */
-    protected $limit;
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function getFormClass()
+    public static function getFormClass(): string
     {
         return LinkedInFeedType::class;
     }
 
-    /**
-     * @param string|null $companyId
-     */
-    public function setCompanyId(?string $companyId)
+    public function setCompanyId(?string $companyId): void
     {
         $this->companyId = $companyId;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getCompanyId()
+    public function getCompanyId(): ?string
     {
         return $this->companyId;
     }
 
-    /**
-     * @param int|null $limit
-     */
-    public function setLimit(?int $limit)
+    public function setLimit(?int $limit): void
     {
         $this->limit = $limit;
     }
 
-    /**
-     * @return int|null
-     */
-    public function getLimit()
+    public function getLimit(): ?int
     {
         return $this->limit;
     }
