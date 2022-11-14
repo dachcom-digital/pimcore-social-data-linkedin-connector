@@ -10,10 +10,10 @@ This Connector allows you to fetch social posts from LinkedIn.
 ![image](https://user-images.githubusercontent.com/700119/96862352-a3f61d00-1465-11eb-9ea0-1c0d676bda01.png)
 
 ### Release Plan
-| Release | Supported Pimcore Versions        | Supported Symfony Versions | Release Date | Maintained     | Branch     |
-|---------|-----------------------------------|----------------------------|--------------|----------------|------------|
-| **2.x** | `10.1` - `10.2`                   | `5.4`                      | 05.01.2022   | Feature Branch | master     |
-| **1.x** | `6.0` - `6.9`                     | `3.4`, `^4.4`              | 22.10.2020   | Unsupported    | [1.x](https://github.com/dachcom-digital/pimcore-social-data-linkedin-connector/tree/1.x) |
+| Release | Supported Pimcore Versions | Supported Symfony Versions | Release Date | Maintained     | Branch                                                                                    |
+|---------|----------------------------|----------------------------|--------------|----------------|-------------------------------------------------------------------------------------------|
+| **2.x** | `10.1` - `10.5`            | `5.4`                      | 05.01.2022   | Feature Branch | master                                                                                    |
+| **1.x** | `6.0` - `6.9`              | `3.4`, `^4.4`              | 22.10.2020   | Unsupported    | [1.x](https://github.com/dachcom-digital/pimcore-social-data-linkedin-connector/tree/1.x) |
 
 ## Installation
 
