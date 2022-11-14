@@ -116,8 +116,8 @@ class LinkedInSDK
         $tmp_params = http_build_query($params);
 
         $data = $this->_makeRequest(self::OAUTH_BASE . '/accessToken?' . $tmp_params, [], self::HTTP_METHOD_POST, ['x-li-format: json', 'Content-length: 0']);
-        if (isset($data->error) && !empty($data->error) && !empty($data->error_description)) {
-            throw new \RuntimeException('Access Token Request Error: ' . $data->error . ' -- ' . $data->error_description);
+        if (isset($data['error'], $data['error_description']) && !empty($data['error']) && !empty($data['error_description'])) {
+            throw new \RuntimeException('Access Token Request Error: ' . $data['error'] . ' -- ' . $data['error_description']);
         }
 
         $this->accessToken = $data['access_token'];
@@ -292,7 +292,7 @@ class LinkedInSDK
 
         $response = json_decode($response, true, 512, JSON_THROW_ON_ERROR);
 
-        if (isset($response->status) && is_numeric($response->status) && ($response->status < 200 || $response->status > 300)) {
+        if (isset($response['status']) && is_numeric($response['status']) && ($response['status'] < 200 || $response['status'] > 300)) {
             throw new \RuntimeException(json_encode($response, JSON_THROW_ON_ERROR));
         }
 
