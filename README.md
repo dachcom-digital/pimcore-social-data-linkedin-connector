@@ -12,42 +12,32 @@ This Connector allows you to fetch social posts from LinkedIn.
 ### Release Plan
 | Release | Supported Pimcore Versions | Supported Symfony Versions | Release Date | Maintained     | Branch                                                                                    |
 |---------|----------------------------|----------------------------|--------------|----------------|-------------------------------------------------------------------------------------------|
-| **2.x** | `10.1` - `10.6`            | `5.4`                      | 05.01.2022   | Feature Branch | master                                                                                    |
+| **3.x** | `11.0`                     | `6.2`                      | 07.11.2023   | Feature Branch | master                                                                                    |
+| **2.x** | `10.1` - `10.6`            | `5.4`                      | 05.01.2022   | Unsupported    | [2.x](https://github.com/dachcom-digital/pimcore-social-data-linkedin-connector/tree/2.x) |
 | **1.x** | `6.0` - `6.9`              | `3.4`, `^4.4`              | 22.10.2020   | Unsupported    | [1.x](https://github.com/dachcom-digital/pimcore-social-data-linkedin-connector/tree/1.x) |
 
 ## Installation
 
-### I. Add Dependency
 ```json
 "require" : {
-    "dachcom-digital/social-data" : "~2.0.0",
-    "dachcom-digital/social-data-linkedin-connector" : "~2.0.0",
+    "dachcom-digital/social-data" : "~3.0.0",
+    "dachcom-digital/social-data-linkedin-connector" : "~3.0.0"
 }
 ```
 
-### II. Register Connector Bundle
+Add Bundle to `bundles.php`:
 ```php
-// src/Kernel.php
-namespace App;
-
-use Pimcore\HttpKernel\BundleCollection\BundleCollection;
-
-class Kernel extends \Pimcore\Kernel
-{
-    public function registerBundlesToCollection(BundleCollection $collection)
-    {
-        $collection->addBundle(new SocialData\Connector\LinkedIn\SocialDataLinkedInConnectorBundle());
-    }
-}
+return [
+    SocialData\Connector\LinkedIn\SocialDataLinkedInConnectorBundle::class => ['all' => true],
+];
 ```
 
-### III. Install Assets
+### Install Assets
 ```bash
 bin/console assets:install public --relative --symlink
 ```
 
 ## Enable Connector
-
 ```yaml
 # config/packages/social_data.yaml
 social_data:
@@ -91,10 +81,10 @@ If everything worked out fine, the connection setup is complete after the popup 
 Otherwise, you'll receive an error message. You may then need to repeat the connection step.
 
 ## Feed Configuration
-| Name | Description
-|------|----------------------|
-| `Company ID` | Set company id to fetch posts from |
-| `Limit` | Define a limit to restrict the amount of social posts to import (Default: 20) |
+| Name         | Description                                                                   |
+|--------------|-------------------------------------------------------------------------------|
+| `Company ID` | Set company id to fetch posts from                                            |
+| `Limit`      | Define a limit to restrict the amount of social posts to import (Default: 20) |
 
 ## Extended Connector Configuration
 Normally you don't need to modify connector (`connector_config`) configuration, so most of the time you can skip this step.

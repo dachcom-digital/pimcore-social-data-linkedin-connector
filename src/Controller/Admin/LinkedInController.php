@@ -3,7 +3,7 @@
 namespace SocialData\Connector\LinkedIn\Controller\Admin;
 
 use Carbon\Carbon;
-use Pimcore\Bundle\AdminBundle\Controller\AdminController;
+use Pimcore\Bundle\AdminBundle\Controller\AdminAbstractController;
 use SocialData\Connector\LinkedIn\Model\EngineConfiguration;
 use SocialData\Connector\LinkedIn\Client\LinkedInClient;
 use SocialDataBundle\Connector\ConnectorDefinitionInterface;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-class LinkedInController extends AdminController
+class LinkedInController extends AdminAbstractController
 {
     use ConnectResponseTrait;
 

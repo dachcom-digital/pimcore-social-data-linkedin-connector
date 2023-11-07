@@ -37,3 +37,9 @@ services:
 
     SocialData\Connector\LinkedIn\Controller\Admin\LinkedInController:
         tags: [ 'controller.service_arguments' ]
+
+    ## Events
+
+    SocialData\Connector\LinkedIn\EventListener\Admin\AssetListener:
+        tags:
+            - { name: kernel.event_subscriber }
