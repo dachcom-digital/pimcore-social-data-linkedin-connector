@@ -2,32 +2,22 @@
 
 namespace SocialData\Connector\LinkedIn;
 
-use Pimcore\Extension\Bundle\AbstractPimcoreBundle;
 use Pimcore\Extension\Bundle\Traits\PackageVersionTrait;
+use Symfony\Component\HttpKernel\Bundle\Bundle;
 
-class SocialDataLinkedInConnectorBundle extends AbstractPimcoreBundle
+class SocialDataLinkedInConnectorBundle extends Bundle
 {
     use PackageVersionTrait;
 
     public const PACKAGE_NAME = 'dachcom-digital/social-data-linkedin-connector';
 
+    public function getPath(): string
+    {
+        return \dirname(__DIR__);
+    }
+
     protected function getComposerPackageName(): string
     {
         return self::PACKAGE_NAME;
-    }
-
-    public function getCssPaths(): array
-    {
-        return [
-            '/bundles/socialdatalinkedinconnector/css/admin.css'
-        ];
-    }
-
-    public function getJsPaths(): array
-    {
-        return [
-            '/bundles/socialdatalinkedinconnector/js/connector/linkedin-connector.js',
-            '/bundles/socialdatalinkedinconnector/js/feed/linkedin-feed.js',
-        ];
     }
 }
