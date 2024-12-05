@@ -19,18 +19,11 @@ class LinkedInController extends AdminAbstractController
 {
     use ConnectResponseTrait;
 
-    protected LinkedInClient $linkedInClient;
-    protected EnvironmentServiceInterface $environmentService;
-    protected ConnectorServiceInterface $connectorService;
-
     public function __construct(
-        LinkedInClient $linkedInClient,
-        EnvironmentServiceInterface $environmentService,
-        ConnectorServiceInterface $connectorService
+        protected LinkedInClient $linkedInClient,
+        protected EnvironmentServiceInterface $environmentService,
+        protected ConnectorServiceInterface $connectorService
     ) {
-        $this->linkedInClient = $linkedInClient;
-        $this->environmentService = $environmentService;
-        $this->connectorService = $connectorService;
     }
 
     public function connectAction(Request $request): Response
@@ -113,10 +106,6 @@ class LinkedInController extends AdminAbstractController
             $accessTokenMetadata = $client->fetchOAuth('introspectToken', $payload, 'POST');
         } catch (\Throwable $e) {
             return $this->adminJson(['error' => true, 'message' => $e->getMessage()]);
-        }
-
-        if (!is_array($accessTokenMetadata)) {
-            return $this->adminJson(['error' => true, 'message' => 'invalid token data']);
         }
 
         if (isset($accessTokenMetadata['authorized_at'])) {

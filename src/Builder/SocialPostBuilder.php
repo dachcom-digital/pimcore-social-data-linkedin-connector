@@ -16,11 +16,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SocialPostBuilder implements SocialPostBuilderInterface
 {
-    protected LinkedInClient $linkedInClient;
-
-    public function __construct(LinkedInClient $linkedInClient)
+    public function __construct(protected LinkedInClient $linkedInClient)
     {
-        $this->linkedInClient = $linkedInClient;
     }
 
     public function configureFetch(BuildConfig $buildConfig, OptionsResolver $resolver): void
@@ -94,10 +91,6 @@ class SocialPostBuilder implements SocialPostBuilderInterface
             $response = $client->getEncoded($queryEndPoint, $queryPayLoad);
         } catch (\Throwable $e) {
             throw new BuildException(sprintf('fetch error: %s [endpoint: %s]', $e->getMessage(), $queryEndPoint));
-        }
-
-        if (!is_array($response)) {
-            return;
         }
 
         if (!isset($response['elements'])) {
