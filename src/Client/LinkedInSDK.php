@@ -1,15 +1,25 @@
 <?php
 
+/*
+ * This source file is available under two different licenses:
+ *   - GNU General Public License version 3 (GPLv3)
+ *   - DACHCOM Commercial License (DCL)
+ * Full copyright and license information is available in
+ * LICENSE.md which is distributed with this source code.
+ *
+ * @copyright  Copyright (c) DACHCOM.DIGITAL AG (https://www.dachcom-digital.com)
+ * @license    GPLv3 and DCL
+ */
+
 namespace SocialData\Connector\LinkedIn\Client;
 
 /**
- * Adapted from https://github.com/ashwinks/PHP-LinkedIn-SDK
+ * Adapted from https://github.com/ashwinks/PHP-LinkedIn-SDK.
  */
 class LinkedInSDK
 {
     protected const API_BASE = 'https://api.linkedin.com/v2';
     protected const OAUTH_BASE = 'https://www.linkedin.com/oauth/v2';
-
     public const R_AD_CAMPAIGNS = 'r_ad_campaigns';                        // View advertising campaigns you manage
     public const R_ADS = 'r_ads';                                          // Retrieve your advertising accounts
     public const R_ADS_LEADGEN_AUTOMATION = 'r_ads_leadgen_automation';    // Access your Lead Gen Forms and retrieve leads
@@ -26,7 +36,6 @@ class LinkedInSDK
     public const RW_ORGANIZATION = 'rw_organization';                      // Manage your organization's page and post updates
     public const W_MEMBER_SOCIAL = 'w_member_social';                      // Post, comment and like posts on your behalf
     public const W_ORGANIZATION_SOCIAL = 'w_organization_social';          // Post, comment and like posts on your organization's behalf
-
     protected const HTTP_METHOD_GET = 'GET';
     protected const HTTP_METHOD_POST = 'POST';
     protected const HTTP_METHOD_PUT = 'PUT';
@@ -67,7 +76,7 @@ class LinkedInSDK
     }
 
     /**
-     * Get the login url, pass scope to request specific permissions
+     * Get the login url, pass scope to request specific permissions.
      *
      * @param array       $scope - an array of requested permissions (can use scope constants defined in this class)
      * @param string|null $state - a unique identifier for this user, if none is passed, one is generated via uniqid
@@ -89,7 +98,7 @@ class LinkedInSDK
     }
 
     /**
-     * Exchange the authorization code for access token
+     * Exchange the authorization code for access token.
      *
      * @throws \RuntimeException
      * @throws \InvalidArgumentException
@@ -127,7 +136,7 @@ class LinkedInSDK
     }
 
     /**
-     * This timestamp is "expires in". In other words, the token will expire in now() + expires_in
+     * This timestamp is "expires in". In other words, the token will expire in now() + expires_in.
      */
     public function getAccessTokenExpiration(): ?string
     {
@@ -135,7 +144,7 @@ class LinkedInSDK
     }
 
     /**
-     * Set the access token manually
+     * Set the access token manually.
      *
      * @throws \InvalidArgumentException
      */
@@ -152,7 +161,7 @@ class LinkedInSDK
     }
 
     /**
-     * Set the state manually. State is a unique identifier for the user
+     * Set the state manually. State is a unique identifier for the user.
      *
      * @throws \InvalidArgumentException
      */
@@ -169,7 +178,7 @@ class LinkedInSDK
     }
 
     /**
-     * Get state
+     * Get state.
      */
     public function getState(): ?string
     {
@@ -177,7 +186,7 @@ class LinkedInSDK
     }
 
     /**
-     * GET an authenticated API endpoind w/ payload
+     * GET an authenticated API endpoind w/ payload.
      */
     public function get(string $endpoint, array $payload = [], array $headers = [], array $curlOptions = []): array
     {
@@ -185,7 +194,7 @@ class LinkedInSDK
     }
 
     /**
-     * GET an authenticated API endpoind w/ payload
+     * GET an authenticated API endpoind w/ payload.
      */
     public function getEncoded(string $endpoint, array $payload = [], array $headers = [], array $curlOptions = []): array
     {
@@ -193,7 +202,7 @@ class LinkedInSDK
     }
 
     /**
-     * POST to an authenticated API endpoint w/ payload
+     * POST to an authenticated API endpoint w/ payload.
      */
     public function post(string $endpoint, array $payload = [], array $headers = [], array $curlOptions = []): array
     {
@@ -203,7 +212,7 @@ class LinkedInSDK
     }
 
     /**
-     * PUT to an authenticated API endpoint w/ payload
+     * PUT to an authenticated API endpoint w/ payload.
      */
     public function put(string $endpoint, array $payload = [], array $headers = [], array $curlOptions = []): array
     {
@@ -230,7 +239,7 @@ class LinkedInSDK
     }
 
     /**
-     * Get debug info from the CURL request
+     * Get debug info from the CURL request.
      */
     public function getDebugInfo(): ?array
     {
@@ -238,7 +247,7 @@ class LinkedInSDK
     }
 
     /**
-     * Make a CURL request
+     * Make a CURL request.
      *
      * @throws \JsonException
      */
@@ -250,7 +259,6 @@ class LinkedInSDK
         array $curlOptions = [],
         bool $useEncodedQuery = false
     ): array {
-
         $ch = $this->_getCurlHandle();
 
         $options = [
@@ -264,14 +272,12 @@ class LinkedInSDK
 
         if (!empty($payload)) {
             if (in_array($options[CURLOPT_CUSTOMREQUEST], [self::HTTP_METHOD_POST, self::HTTP_METHOD_PUT], true)) {
-
                 $options[CURLOPT_POST] = true;
                 $options[CURLOPT_POSTFIELDS] = http_build_query($payload);
 
                 $headers[] = 'Content-Length: ' . strlen($options[CURLOPT_POSTFIELDS]);
 
                 $options[CURLOPT_HTTPHEADER] = $headers;
-
             } else {
                 $query = http_build_query($payload);
                 $options[CURLOPT_URL] = sprintf('%s&%s', $options[CURLOPT_URL], ($useEncodedQuery ? urldecode($query) : $query));
@@ -314,5 +320,4 @@ class LinkedInSDK
             curl_close($this->curlHandle);
         }
     }
-
 }
